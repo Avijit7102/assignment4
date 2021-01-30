@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Booking</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <!--Header and Menu Section-->
+    <header class="container">
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a class="active" href="#">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!--Booking Section-->
+    <main class="main-content container">
+        <div id = "first-page" class="booking-form">
+            <h3>Booking Flights</h3>
+            <div class="input-group">
+                <label for="">Flying From</label>
+                <input class="inp-style" type="text" name="" placeholder="Dhaka, Bangladesh">
+            </div>
+            <div class="input-group">
+                <label for="">Flying To</label>
+                <input class="inp-style" type="text" name="" placeholder="New York, United States">
+            </div>
+            <div class="inputs">
+                <div class="input-group">
+                    <label" for="">Departure</label>
+                    <input class="inp-style" type="date" name="">
+                </div>
+                <div class="input-group">
+                    <label for="">Return</label>
+                    <input class="inp-style" type="date" name="">
+                </div>
+            </div>
+            <div class="input-group f-class">
+                <div>
+                    <label for="">First Class ($150)</label>
+                    <input id = "first-class-ticket-count" class="inp-style inp-width" type="number" name="" value="0">
+                </div>
+                <div class="plus-minus-btn">
+                    <button onclick = "ticketCount('first-class-ticket-count', true)" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                    <button onclick = "ticketCount('first-class-ticket-count', false)" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                </div>
+            </div>
+            
+            <div class="input-group f-class">
+                <div>
+                    <label for="">Economy ($100)</label>
+                    <input id = "economy-ticket-count" class="inp-style inp-width" type="number" name="" value="0">
+                </div>
+                <div class="plus-minus-btn">
+                    <button onclick = "ticketCount('economy-ticket-count', true)" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                    <button onclick = "ticketCount('economy-ticket-count', false)" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="calculations">
+                <div class="amount">
+                    <div class="left">
+                        <p>Subtotal</p>
+                    </div>
+                    <div class="right">
+                        <p>$<span id="subtotalBalance">0</span></p>
+                    </div>
+                </div>
+
+                <div class="amount">
+                    <div class="left">
+                        <p>Charge 10% VAT</p>
+                    </div>
+                    <div class="right">
+                        <p>$<span id="taxTotal">0</span></p>
+                    </div>
+                </div>
+                <hr>
+                <div class="amount">
+                    <div class="left">
+                        <h4>Total</h4>
+                    </div>
+                    <div class="right">
+                        <p>$<span id="totalAmount">0</p>
+                    </div>
+                </div>
+            </div>
+            <button id = "bookNow" class="btn-style">Book Now</button>
+        </div>
+
+        <div id = "booking-part" class="booking-content">
+            <h1>discover <br> around the world</h1>
+            <p>Trust is our first priority. Life is a journey, Make the most of it.</p>
+        </div> 
+    </section>
+    <!--Code for the last part after clicking Book Now-->
+    <div id = "last-part" class="f-class info">
+        <h5>Your Purchase Information: </h5>
+        <br>
+        <div>
+            <label for="">Total First Class Ticket You Purchased : </label>
+            <input id = "total-first-class-ticket-count" class="inp-style input-box" type="number" name="">
+        </div>
+        <div>
+            <label for="">Total Economy Class Ticket You Purchased : </label>
+            <input id = "total-economy-ticket-count" class="inp-style input-box" type="number" name="">
+        </div>
+        <div>
+            <label for="">Total Price Without Tax : </label>
+            <input id="total-amount-without-tax" class="inp-style input-box" type="number" name="">
+        </div>
+        <div>
+            <label for="">Total Price After Tax : </label>
+            <input id="total-amount-with-tax" class="inp-style input-box" type="number" name="">
+        </div>
+        <br>
+        <button class="checkout">Proceed To Checkout</button>
+    </div>
+    <script>
+        
+        function ticketCount(id, isIncrease){
+            var quantity = document.getElementById(id).value;
+            quantity = parseInt(quantity);
+            if(isIncrease)
+            {
+                quantity++;
+            }
+            else
+            {
+                quantity--;
+                if(quantity < 0)
+                {
+                    quantity = 0;
+                }
+            }
+            document.getElementById(id).value = quantity;
+            subTotal();
+        }
+        //calculating function for all Total Price with tax.
+        function subTotal(){
+            var firstClassTicketQuantity = document.getElementById("first-class-ticket-count").value;
+            var economyTicketQuantity = document.getElementById("economy-ticket-count").value;
+            firstClassTicketQuantity = parseInt(firstClassTicketQuantity);
+            economyTicketQuantity = parseInt(economyTicketQuantity);
+            var total = firstClassTicketQuantity * 150 + economyTicketQuantity * 100; // price without tax
+            document.getElementById("subtotalBalance").innerText = total;
+            var tax = total * .1;
+            document.getElementById("taxTotal").innerText = tax;
+            var totalPrice = total + tax; // price with tax
+            document.getElementById("totalAmount").innerText = totalPrice;
+
+            // putting the number of ticket quantity for the bonus part
+            document.getElementById("total-first-class-ticket-count").value = firstClassTicketQuantity;
+            document.getElementById("total-economy-ticket-count").value = economyTicketQuantity;
+            document.getElementById("total-amount-without-tax").value = total;
+            document.getElementById("total-amount-with-tax").value = totalPrice;
+        }
+        // bonus part 
+        document.getElementById("bookNow").addEventListener("click", function(){
+            const bookNowBtn = document.getElementById("first-page");
+            bookNowBtn.style.display = "none";
+            const lastPart = document.getElementById("last-part");
+            lastPart.style.display = "block";
+
+        })
+    </script>
+    <!--Thank You-->
+</body>
+</html>
